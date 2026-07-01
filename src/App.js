@@ -521,7 +521,7 @@ function App() {
   const OrderMedicine = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('all');
-    const [quantities, setQuantities] = useState({});
+    // Removed unused quantities state
 
     const medicines = [
       { id: 1, name: "Paracetamol 500mg", price: 5.99, prescription: false, category: "Pain Relief", stock: 50, description: "For fever and mild pain relief" },
@@ -1130,7 +1130,7 @@ function App() {
       );
     };
 
-    // Order History Component
+    // Order History Component (now used inside OrderMedicine)
     const OrderHistory = () => (
       <div style={styles.pageContainer}>
         <h1 style={styles.pageTitle}>Order History</h1>
@@ -1412,6 +1412,11 @@ function App() {
     );
 
     // Main render based on checkout step
+    // If we're on the order-history page, show OrderHistory component
+    if (currentPage === 'order-history') {
+      return <OrderHistory />;
+    }
+
     return (
       <div style={styles.pageContainer}>
         <h1 style={styles.pageTitle}>Order Medicine</h1>
@@ -2061,9 +2066,7 @@ function App() {
         {currentPage === 'order-medicine' && <OrderMedicine />}
         {currentPage === 'my-appointments' && <MyAppointments />}
         {currentPage === 'prescriptions' && <Prescriptions />}
-        {currentPage === 'order-history' && (
-          <OrderMedicine /> // This will render OrderHistory component from OrderMedicine
-        )}
+        {currentPage === 'order-history' && <OrderMedicine />}
       </div>
       
       {/* Show modals if needed */}
